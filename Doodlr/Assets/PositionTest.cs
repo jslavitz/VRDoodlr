@@ -13,6 +13,6 @@ public class PositionTest : MonoBehaviour {
 	
 	void LateUpdate() {
 	
-		text.text = "Score: " + Mathf.RoundToInt(player.position.y) + " m";
+		text.text =  Mathf.RoundToInt(player.position.y) + " m";
 	}
 }

@@ -4,6 +4,10 @@ using System.Collections;
 public class EnemyTriggerEnter : MonoBehaviour {
 
 	void OnTriggerEnter(Collider collider){
-		Camera.main.transform.parent.gameObject.GetComponent<PlayerController> ().GameOver ();
+
+		if (collider.gameObject.layer == 9) 
+			Camera.main.transform.parent.gameObject.GetComponent<PlayerController> ().GameOver ();
+		else
+			Destroy (gameObject);
 	}
 }

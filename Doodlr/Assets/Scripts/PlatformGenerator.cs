@@ -11,22 +11,47 @@ public class PlatformGenerator : MonoBehaviour {
 	private float minDisp = 4;
 
 	public Transform PlatformPrefab;
-	public int numPlatformsPerIteration = 3;
+	public int numPlatformsPerIteration = 5;
 
 	private GameObject temp;
 
 	public int raycastSteps = 10;
 	private Transform[] platforms;
-	private float yValueForEnemies = 50;
+	private float yValueForEnemies = 60;
+	private float yValueForGun = 45;
 
+	private float gunForce = 1000;
 	public Material newMaterial;
 	public Material oldMaterial;
 
 	public Transform[] enemies;
+	public Transform gun;
+	public Transform Bullet;
+
+	private bool playerHasGun = false;
+	private bool hasTriggered = false;
 
 	void Start(){
 		temp = new GameObject ();
 		platforms = new Transform[numPlatformsPerIteration];
+	}
+
+	void Update(){
+		if (playerHasGun && Cardboard.SDK.Triggered && !hasTriggered) {
+			Vector3 forw = Camera.main.transform.forward;
+			Transform bullet = Instantiate (Bullet, Camera.main.transform.position + forw, Quaternion.identity) as Transform;
+			Rigidbody rigidbody = bullet.GetComponent<Rigidbody> ();
+			//rigidbody.useGravity = false;
+
+			rigidbody.velocity = player.GetComponent<Rigidbody>().velocity;
+			rigidbody.AddForce (forw * gunForce);
+			hasTriggered = true;
+		} else
+			hasTriggered = false;
+	}
+
+	public void setPlayerGun(bool set){
+		playerHasGun = set;
 	}
 
 	public void generateNewPlatform(Transform player, Vector3 position, Vector3 newVel, bool regen){
@@ -62,12 +87,17 @@ public class PlatformGenerator : MonoBehaviour {
 
 				Vector3 finalPos = tTrans.position + Vector3.up * randYDisp;
 
-				if(player.transform.position.y >= yValueForEnemies && Random.Range(0, 4) == 0){
+				if(Random.Range(0, 4) == 0){
 					int index = Random.Range(0, enemies.Length - 1);
 					Transform enemy = Instantiate(enemies[index], finalPos + Vector3.up * .5f, Quaternion.identity) as Transform;
 					enemy.LookAt(player);
 					enemy.eulerAngles = new Vector3(0, enemy.eulerAngles.y, 0);
+				}
 
+				if(!playerHasGun && Random.Range(0, 2) == 0){
+					Transform enemy = Instantiate(gun, finalPos + Vector3.up * 1.5f, Quaternion.identity) as Transform;
+					gun.LookAt(player);
+					gun.eulerAngles = new Vector3(0, enemy.eulerAngles.y, 0);
 				}
 
 

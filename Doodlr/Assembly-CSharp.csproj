@@ -6,7 +6,7 @@
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
 	<RootNamespace></RootNamespace>
-	<ProjectGuid>{346F71E5-0326-10B1-1186-8C3781204DD2}</ProjectGuid>
+	<ProjectGuid>{D3D1B24B-F5A9-2FA2-4BC6-7E2B25C2BA09}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<AssemblyName>Assembly-CSharp</AssemblyName>
@@ -45,6 +45,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\BulletDie.cs" />
      <Compile Include="Assets\Cardboard\DemoScene\FPS.cs" />
      <Compile Include="Assets\Cardboard\DemoScene\Teleport.cs" />
      <Compile Include="Assets\Cardboard\Legacy\DemoScene\TeleportLegacyUI.cs" />
@@ -79,6 +80,7 @@
      <Compile Include="Assets\Game Jam Menu Template\Scripts\SetAudioLevels.cs" />
      <Compile Include="Assets\Game Jam Menu Template\Scripts\ShowPanels.cs" />
      <Compile Include="Assets\Game Jam Menu Template\Scripts\StartOptions.cs" />
+     <Compile Include="Assets\PicksGun.cs" />
      <Compile Include="Assets\PositionTest.cs" />
      <Compile Include="Assets\Scripts\EnemyTriggerEnter.cs" />
      <Compile Include="Assets\Scripts\PlatformGenerator.cs" />
@@ -98,19 +100,13 @@
      <None Include="Assets\Cardboard\Resources\SolidColor.shader" />
      <None Include="Assets\Game Jam Menu Template\GameJamTemplateReadMe.txt" />
  <Reference Include="Assembly-UnityScript-firstpass">
- <HintPath>/Users/JeremySlavitz/Desktop/VRDoodler/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
+ <HintPath>/Users/JeremySlavitz/Desktop/VRDoodlr/Doodlr/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Analytics">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>/Applications/Unity/Unity.app/Contents/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
