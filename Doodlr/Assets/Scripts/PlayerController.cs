@@ -66,13 +66,13 @@ public class PlayerController : MonoBehaviour {
 		}
 
 	}
-public void GameOver(){
+	public void GameOver(){
 		Destroy (gameObject.GetComponent<Rigidbody>());
 		hasEnded = true;	
 
 		gameOverText.gameObject.SetActive (true);
-	gameOverText.text = "You climbed " + Mathf.Round (height) + " meters!";
-				restartText.SetActive (true);
+		gameOverText.text = "You climbed " + Mathf.Round (height) + " meters!";
+		restartText.SetActive (true);
 
 	}
 

@@ -11,19 +11,19 @@ public class PlatformGenerator : MonoBehaviour {
 	private float minDisp = 4;
 
 	public Transform PlatformPrefab;
-	public int numPlatformsPerIteration = 5;
+	public int numPlatformsPerIteration = 10;
 
 	private GameObject temp;
 
 	public int raycastSteps = 10;
-	private Transform[] platforms;
-	private float yValueForEnemies = 60;
-	private float yValueForGun = 45;
-
+	private float yValueForEnemies = 40;
+	private float yValueForGun = 20;
 	private float gunForce = 1000;
+
 	public Material newMaterial;
 	public Material oldMaterial;
 
+	private Transform[] platforms;
 	public Transform[] enemies;
 	public Transform gun;
 	public Transform Bullet;
@@ -32,7 +32,7 @@ public class PlatformGenerator : MonoBehaviour {
 	private bool hasTriggered = false;
 
 	void Start(){
-		temp = new GameObject ();
+		temp = new GameObject ("RotationObject");
 		platforms = new Transform[numPlatformsPerIteration];
 	}
 
@@ -74,6 +74,7 @@ public class PlatformGenerator : MonoBehaviour {
 		if (getImpactPosFromVelocity (player, newVel, yMax, ref impactPoint)) {
 
 			for (int i = 0; i < numPlatformsPerIteration; i++) {
+				print (numPlatformsPerIteration + " " + i);
 	
 				float randYDisp = Random.Range (minDisp, yMax - 10);
 
@@ -81,20 +82,23 @@ public class PlatformGenerator : MonoBehaviour {
 
 				tTrans.position = impactPoint;
 			
-				temp.transform.Rotate (Random.Range (360 / numPlatformsPerIteration * i, 360 / numPlatformsPerIteration * (i + 1)) * Vector3.up);
+				temp.transform.Rotate (Random.Range ((360 / numPlatformsPerIteration) * i, (360 / numPlatformsPerIteration) * (i + 1)) * Vector3.up);
 
 				tTrans.Translate (Vector3.forward * xPos);
 
 				Vector3 finalPos = tTrans.position + Vector3.up * randYDisp;
 
-				if(Random.Range(0, 4) == 0){
+				bool spawnedEnemy = false;
+
+				if(player.transform.position.y > yValueForEnemies && Random.Range(0, 4) == 0){
 					int index = Random.Range(0, enemies.Length - 1);
 					Transform enemy = Instantiate(enemies[index], finalPos + Vector3.up * .5f, Quaternion.identity) as Transform;
 					enemy.LookAt(player);
 					enemy.eulerAngles = new Vector3(0, enemy.eulerAngles.y, 0);
+					spawnedEnemy = true;
 				}
 
-				if(!playerHasGun && Random.Range(0, 2) == 0){
+				if(!spawnedEnemy && player.transform.position.y > yValueForGun && !playerHasGun && Random.Range(0, 2 * numPlatformsPerIteration) == 0){
 					Transform enemy = Instantiate(gun, finalPos + Vector3.up * 1.5f, Quaternion.identity) as Transform;
 					gun.LookAt(player);
 					gun.eulerAngles = new Vector3(0, enemy.eulerAngles.y, 0);
@@ -130,21 +134,28 @@ public class PlatformGenerator : MonoBehaviour {
 		Vector3 pPos = player.position;
 		Vector3 pFor = player.forward;
 
+		pFor.y = Mathf.Abs (pFor.y);
+
 		RaycastHit ray = new RaycastHit ();
+		//GameObject gop = new GameObject ("Parent");
 
 		for (int i = raycastSteps - 1; i > 0; i--) {
 			float xCoord1 = getXCoordFromVel(pFor, newVel, step * i);
 			float xCoord2 = getXCoordFromVel(pFor, newVel, step * (i - 1));
 
-			Vector3 pos1 = pPos + pFor * xCoord1 + Vector3.up * step * i;
-			Vector3 pos2 = pPos + pFor * xCoord2 + Vector3.up * step * (i - 1);
+			Vector3 pos1 = pPos + temp.transform.forward * xCoord1 + Vector3.up * step * i;
+			Vector3 pos2 = pPos + temp.transform.forward * xCoord2 + Vector3.up * step * (i - 1);
+
+		//	GameObject go = new GameObject("Coord " + i);
+		//	go.transform.position = pos2;
+		//	go.transform.parent = gop.transform;
 			//print (xCoord1 + " and " + xCoord2);
 
 			float dist = Vector3.Distance(pos1, pos2);
 
 			if(Physics.Raycast(pos1, pos2 - pos1, out ray, dist, 1 << 8)){
 				impactPoint = ray.point;
-				print ("Will Impact!");
+		//		print ("Will Impact!");
 				return true;
 			}
 		}
@@ -154,6 +165,7 @@ public class PlatformGenerator : MonoBehaviour {
 	float getXCoordFromVel(Vector3 mforward, Vector3 velocity, float yVal){
 		
 		Vector3 tfor = mforward;
+		//temp.transform.position = player.transform.position;
 
 		temp.transform.rotation = Quaternion.LookRotation (new Vector3 (tfor.x, 0, tfor.z), Vector3.up);
 		Transform tTrans = temp.transform;

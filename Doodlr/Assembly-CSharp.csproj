@@ -45,7 +45,6 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\BulletDie.cs" />
      <Compile Include="Assets\Cardboard\DemoScene\FPS.cs" />
      <Compile Include="Assets\Cardboard\DemoScene\Teleport.cs" />
      <Compile Include="Assets\Cardboard\Legacy\DemoScene\TeleportLegacyUI.cs" />
@@ -80,11 +79,12 @@
      <Compile Include="Assets\Game Jam Menu Template\Scripts\SetAudioLevels.cs" />
      <Compile Include="Assets\Game Jam Menu Template\Scripts\ShowPanels.cs" />
      <Compile Include="Assets\Game Jam Menu Template\Scripts\StartOptions.cs" />
-     <Compile Include="Assets\PicksGun.cs" />
-     <Compile Include="Assets\PositionTest.cs" />
+     <Compile Include="Assets\Scripts\BulletDie.cs" />
      <Compile Include="Assets\Scripts\EnemyTriggerEnter.cs" />
+     <Compile Include="Assets\Scripts\PicksGun.cs" />
      <Compile Include="Assets\Scripts\PlatformGenerator.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\PositionTest.cs" />
      <Compile Include="Assets\SkySphere_V1\Examples\Gui.cs" />
      <Compile Include="Assets\SkySphere_V1\Examples\MouseLook.cs" />
      <None Include="Assets\Cardboard\Resources\SkyboxMesh.shader" />
